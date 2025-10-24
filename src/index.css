@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Warm, calming base colors */
+    --background: 35 30% 97%;
+    --foreground: 280 15% 25%;
+
+    /* Card with subtle glass effect */
+    --card: 0 0% 100%;
+    --card-foreground: 280 15% 25%;
+
+    /* Popovers */
+    --popover: 0 0% 100%;
+    --popover-foreground: 280 15% 25%;
+
+    /* Primary: Soft lavender */
+    --primary: 270 70% 75%;
+    --primary-foreground: 280 15% 25%;
+
+    /* Secondary: Warm coral */
+    --secondary: 10 75% 75%;
+    --secondary-foreground: 280 15% 25%;
+
+    /* Muted tones */
+    --muted: 35 20% 92%;
+    --muted-foreground: 280 10% 45%;
+
+    /* Accent: Peach */
+    --accent: 20 80% 80%;
+    --accent-foreground: 280 15% 25%;
+
+    /* Destructive */
+    --destructive: 0 65% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders and inputs */
+    --border: 270 30% 88%;
+    --input: 270 30% 88%;
+    --ring: 270 70% 75%;
+
+    /* Rounded corners */
+    --radius: 1rem;
+
+    /* Custom gradient tokens */
+    --gradient-calm: linear-gradient(135deg, hsl(270 70% 75%) 0%, hsl(10 75% 75%) 100%);
+    --gradient-soft: linear-gradient(180deg, hsl(35 30% 97%) 0%, hsl(270 20% 95%) 100%);
+    
+    /* Glass morphism */
+    --glass-bg: hsla(0, 0%, 100%, 0.7);
+    --glass-border: hsla(270, 30%, 88%, 0.3);
+
+    /* Animations */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
