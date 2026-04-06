@@ -19,6 +19,17 @@ It's a daily self-reflection companion where you chat mindfully, receive persona
 - Deno for running serverless functions  
 - Google Gemini API for conversational AI and personalized affirmations
 
+## Screenshots
+
+### Welcome
+![Welcome screen](README-assets/home.png)
+
+### Chat Reflection
+![Chat reflection flow](README-assets/chat.png)
+
+### Reflection Gallery
+![Reflection gallery](README-assets/gallery.png)
+
 ## Setup
 
 ### 1) Install and run
