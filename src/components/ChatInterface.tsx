@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { Send, Sparkles } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 interface Message {
   role: 'user' | 'assistant';
@@ -24,6 +25,7 @@ export const ChatInterface = ({ emotion, onComplete }: ChatInterfaceProps) => {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { toast } = useToast();
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -58,8 +60,19 @@ export const ChatInterface = ({ emotion, onComplete }: ChatInterfaceProps) => {
       if (messages.length >= 5) {
         setTimeout(() => onComplete([...messages, userMessage, assistantMessage]), 3000);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error:', error);
+
+      const message = typeof error?.message === "string" ? error.message : "Unknown error";
+      const isFunctionsFetchError = message.toLowerCase().includes("failed to send a request to the edge function");
+
+      toast({
+        title: "Chat service unavailable",
+        description: isFunctionsFetchError
+          ? "Edge Function is unreachable. Deploy/link functions to this Supabase project and set GOOGLE_GEMINI_API_KEY secret."
+          : message,
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }

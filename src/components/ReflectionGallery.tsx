@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Calendar, TrendingUp } from "lucide-react";
 import { format } from "date-fns";
+import { useToast } from "@/hooks/use-toast";
 
 interface Reflection {
   id: string;
@@ -14,6 +15,7 @@ interface Reflection {
 export const ReflectionGallery = () => {
   const [reflections, setReflections] = useState<Reflection[]>([]);
   const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
 
   useEffect(() => {
     loadReflections();
@@ -21,15 +23,29 @@ export const ReflectionGallery = () => {
 
   const loadReflections = async () => {
     try {
+      const { data: authData, error: authError } = await supabase.auth.getUser();
+      if (authError) throw authError;
+
+      if (!authData.user) {
+        setReflections([]);
+        return;
+      }
+
       const { data, error } = await supabase
         .from('reflections')
         .select('*')
+        .eq('user_id', authData.user.id)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
       setReflections(data || []);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error loading reflections:', error);
+      toast({
+        title: "Could not load reflections",
+        description: error?.message || "Database query failed. Check Supabase URL, key, and migrations.",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }

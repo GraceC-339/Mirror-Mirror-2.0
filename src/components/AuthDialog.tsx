@@ -46,9 +46,28 @@ export const AuthDialog = ({ open, onOpenChange }: AuthDialogProps) => {
       }
       onOpenChange(false);
     } catch (error: any) {
+      const rawMessage = error?.message || "Authentication failed";
+      const lowerMessage = rawMessage.toLowerCase();
+
+      if (lowerMessage.includes("email not confirmed") || lowerMessage.includes("email not verified")) {
+        toast({
+          title: "Email confirmation is enabled",
+          description: "Turn off Confirm Email in Supabase: Authentication -> Providers -> Email.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const isSchemaIssue =
+        lowerMessage.includes("database") ||
+        lowerMessage.includes("relation") ||
+        lowerMessage.includes("schema");
+
       toast({
         title: "Error",
-        description: error.message,
+        description: isSchemaIssue
+          ? "Auth worked but database setup is incomplete for this Supabase project. Run your migrations on the project in your .env file."
+          : rawMessage,
         variant: "destructive",
       });
     } finally {
