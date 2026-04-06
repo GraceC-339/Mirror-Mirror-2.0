@@ -17,7 +17,7 @@ It's a daily self-reflection companion where you chat mindfully, receive persona
 - shadcn-ui & Tailwind CSS (design system)  
 - Supabase for backend & storage  
 - Deno for running serverless functions  
-- Google Gemini API for conversational AI and personalized affirmations
+- Google Gemini API for conversational AI and personalised affirmations
 
 ## Screenshots
 
@@ -79,7 +79,7 @@ supabase functions list
 
 - If sign-in shows `Email not confirmed`, disable email confirmation in Supabase:
    - Authentication -> Providers -> Email -> Confirm email OFF
-- If your function is protected and user session is missing, function calls can return `401 Unauthorized`.
+- If your function is protected and the user session is missing, function calls can return `401 Unauthorized`.
 
 ## Camera Notes (Chrome + macOS)
 
